@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/cast"
@@ -15,6 +16,8 @@ const (
 	TestMode = "test"
 	// ReleaseMode indicates service mode is release.
 	ReleaseMode = "release"
+
+	TimeExpiredAt = time.Hour * 24
 )
 
 type Config struct {
@@ -29,6 +32,8 @@ type Config struct {
 	PostgresPassword       string
 	PostgresPort           string
 	PostgresMaxConnections int32
+
+	AuthSecretKey string
 
 	DefaultOffset int
 	DefaultLimit  int
@@ -54,6 +59,8 @@ func Load() Config {
 
 	cfg.DefaultOffset = cast.ToInt(getOrReturnDefaultValue("OFFSET", 0))
 	cfg.DefaultLimit = cast.ToInt(getOrReturnDefaultValue("LIMIT", 10))
+
+	cfg.AuthSecretKey = cast.ToString(getOrReturnDefaultValue("AUTH_SECRET_KEY", "secret"))
 
 	return cfg
 }

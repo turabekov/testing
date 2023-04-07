@@ -40,3 +40,14 @@ CREATE TABLE "order_products" (
   "order_id" UUID NOT NULL REFERENCES "orders" ("id"),
   "product_id" UUID NOT NULL REFERENCES "product" ("id")
 );
+
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY NOT NULL UNIQUE,
+  first_name VARCHAR NOT NULL,
+  last_name VARCHAR NOT NULL,
+  login VARCHAR NOT NULL UNIQUE,
+  password VARCHAR NOT NULL,
+  phone_number VARCHAR NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP NOT NULL
+);

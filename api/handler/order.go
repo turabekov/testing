@@ -242,7 +242,7 @@ func (h *Handler) CreateOrderItem(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "id"
-// @Param orderItem body models.OrderItemPrimaryKey true "DeleteOrderItemRequest"
+// @Param orderItem body models.OrderProductPrimaryKey true "DeleteOrderItemRequest"
 // @Success 204 {object} Response{data=string} "Success Request"
 // @Response 400 {object} Response{data=string} "Bad Request"
 // @Failure 500 {object} Response{data=string} "Server Error"

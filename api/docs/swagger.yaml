@@ -44,6 +44,13 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.CreateOrderItem:
+    properties:
+      order_id:
+        type: string
+      product_id:
+        type: string
+    type: object
   models.CreateProduct:
     properties:
       category_id:
@@ -61,7 +68,32 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.CreateUser:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  models.Login:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    type: object
   models.OrderPrimaryKey:
+    properties:
+      id:
+        type: string
+    type: object
+  models.OrderProductPrimaryKey:
     properties:
       id:
         type: string
@@ -69,6 +101,19 @@ definitions:
   models.ProductPrimaryKey:
     properties:
       id:
+        type: string
+    type: object
+  models.Register:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+      phone_number:
         type: string
     type: object
   models.UpdateCategory:
@@ -117,6 +162,28 @@ definitions:
       quantity:
         type: integer
       updated_at:
+        type: string
+    type: object
+  models.UpdateUser:
+    properties:
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  models.UserPrimaryKey:
+    properties:
+      id:
+        type: string
+      login:
         type: string
     type: object
 info:
@@ -606,6 +673,52 @@ paths:
       summary: Update Client
       tags:
       - Client
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Create Login
+      operationId: login
+      parameters:
+      - description: LoginRequest
+        in: body
+        name: logim
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Login
+      tags:
+      - Login
   /order:
     get:
       consumes:
@@ -846,6 +959,103 @@ paths:
                   type: string
               type: object
       summary: Update Order
+      tags:
+      - Order
+  /order_item:
+    post:
+      consumes:
+      - application/json
+      description: Create Order Item
+      operationId: create_order_item
+      parameters:
+      - description: CreateOrderItemRequest
+        in: body
+        name: order_item
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOrderItem'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Order Item
+      tags:
+      - Order
+  /order_item/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Order Item
+      operationId: delete_order_item
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: DeleteOrderItemRequest
+        in: body
+        name: orderItem
+        required: true
+        schema:
+          $ref: '#/definitions/models.OrderProductPrimaryKey'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete Order Item
       tags:
       - Order
   /product:
@@ -1090,4 +1300,292 @@ paths:
       summary: Update Product
       tags:
       - Product
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create Register
+      operationId: register
+      parameters:
+      - description: CreateRegisterRequest
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/models.Register'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create Register
+      tags:
+      - Register
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: Get List User
+      operationId: get_list_user
+      parameters:
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get List User
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Create User
+      operationId: create_user
+      parameters:
+      - description: CreateUserRequest
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateUser'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Create User
+      tags:
+      - User
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete User
+      operationId: delete_user
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: DeleteUserRequest
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserPrimaryKey'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Delete User
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      description: Get By ID User
+      operationId: get_by_id_user
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Get By ID User
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update User
+      operationId: update_user
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateUserRequest
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateUser'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Success Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Update User
+      tags:
+      - User
 swagger: "2.0"

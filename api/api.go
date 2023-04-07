@@ -16,6 +16,16 @@ import (
 func NewApi(r *gin.Engine, cfg *config.Config, store storage.StorageI, logger logger.LoggerI) {
 	handler := handler.NewHandler(cfg, store, logger)
 
+	r.POST("/register", handler.Register)
+	r.POST("/login", handler.Login)
+
+	// user api
+	r.POST("/user", handler.CreateUser)
+	r.GET("/user/:id", handler.GetByIdUser)
+	r.GET("/user", handler.GetListUser)
+	r.PUT("/user/:id", handler.UpdateUser)
+	r.DELETE("/user/:id", handler.DeleteUser)
+
 	// category api
 	r.POST("/category", handler.CreateCategory)
 	r.GET("/category/:id", handler.GetByIdCategory)
